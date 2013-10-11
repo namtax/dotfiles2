@@ -5,12 +5,11 @@ cd
 
 echo "Checking for existing .bashrc.d..."
 if [ -d ~/.bashrc.d ]; then
-  echo "ERROR: You need to delete .bashrc.d before install will proceed"
-  # exit 1
+  echo ".bashrc.d already exists, assuming we are good to go!"
+else
+  echo "Cloning repository..."
+  git clone git@github.com:csutter/dotfiles2.git .bashrc.d
 fi
-
-echo "Cloning repository..."
-# git clone git@github.com:csutter/dotfiles2.git .bashrc.d
 
 echo "Checking for existing dotfiles/deleting symlinks..."
 for file in ~/.bashrc.d/config/*; do
@@ -22,7 +21,9 @@ for file in ~/.bashrc.d/config/*; do
   fi
 
   # Error out if it exists as an actual file
-  [ -f ~/.${file##*/}] || continue
+  if [ -f ~/.${file##*/} ]; then
+    continue
+  fi
   echo "ERROR: You need to backup and delete ~/.${file##*/} before install will proceed."
   exit 1
 done

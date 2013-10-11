@@ -1,0 +1,2 @@
+# Only source .bashrc, that's all bash_profile is good for.
+source ~/.bashrc
