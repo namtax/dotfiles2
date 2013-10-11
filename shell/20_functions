@@ -1,0 +1,36 @@
+# shell/functions
+#  Some more or less useful functions
+
+# Start or attach to tmux session
+tm() {
+  [[ -z "$1" ]] && { echo "usage: tm <session>" >&2; return 1; }
+  tmux has -t $1 &> /dev/null && tmux attach -t $1 || tmux new -s $1
+}
+TMUX_COMPLETE=( $(tmux list-sessions | cut -f1 -d':') )
+complete -o default -W "${TMUX_COMPLETE[*]}" tm
+
+# Upgrade our dotfiles
+function upgrade_bashrc()
+{
+  CURRDIR=$PWD
+  cd "$HOME/.bashrc.d"
+  git pull origin master
+  cd "${CURRDIR}"
+  source "$HOME/.bashrc"
+}
+
+# Switch to code directory
+c()
+{
+  cd "/Users/chris/code/$1"
+}
+CODEDIR_COMPLETE=( $(ls ~/code) )
+complete -o default -W "${CODEDIR_COMPLETE[*]}" c
+
+# Prints all 256 colours
+colours()
+{
+  for i in {0..255}; do
+    printf "\x1b[38;5;${i}mcolour${i}\n"
+  done
+}

@@ -1,0 +1,14 @@
+# shell/colors
+#  Pretty colours all over the place!
+
+export CWHITE="\[\e[0;1m\]"
+export CBLUE="\[\e[0;34m\]"
+export CGREEN="\[\e[0;32m\]"
+export CYELLOW="\[\e[0;33m\]"
+export CCYAN="\[\e[0;36m\]"
+export CRED="\[\e[0;31m\]"
+export CPLAIN="\[\e[0;0m\]"
+
+export CBRIGHTBLACK="\[\e[1;30m\]"
+export CBRIGHTWHITE="\[\e[1;37m\]"
+export CBRIGHTBLUE="\[\e[1;34m\]"

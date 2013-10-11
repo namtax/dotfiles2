@@ -1,0 +1,5 @@
+# shell/external
+#  Other stuff we may want to load in
+
+# EC2 utilities
+[[ -s "$HOME/.awsrc" ]] && source "$HOME/.awsrc"

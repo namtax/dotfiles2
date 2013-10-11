@@ -1,0 +1,7 @@
+# Better history search
+"\e[B": history-search-forward
+"\e[A": history-search-backward
+
+# Alt-left/right back/forward word
+"\e\e[C": forward-word
+"\e\e[D": backward-word

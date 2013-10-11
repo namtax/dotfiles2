@@ -1,0 +1,33 @@
+# shell/alias
+#  A bunch of useful aliases for often used things
+
+# Shell
+alias sup="source $HOME/.bashrc"
+
+# Tail
+alias tf="tail -n0 -f"
+
+# Directories
+alias l="ls"
+alias ll="ls -al"
+alias ..="cd .."
+alias ...="cd ../.."
+
+# Git
+alias g="git"
+alias gf="git fetch"
+alias gg="git grep"
+alias gcm="git commit -m"
+alias gca="git commit --amend"
+alias gl="git log --pretty=format:'%C(cyan)%h%Creset%C(yellow)%d%Creset %s %C(yellow bold)(%cr by %an)%Creset' --abbrev-commit"
+alias gst="git status -sb"
+alias ga="git add"
+alias gb="git branch"
+alias gco="git checkout"
+alias gp="git push"
+alias gd="git diff"
+alias gu="git up"
+
+# Postgres
+alias pgstart="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
+alias pgstop="pg_ctl -D /usr/local/var/postgres stop"

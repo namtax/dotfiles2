@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+echo "Changing to home directory..."
+cd
+
+echo "Checking for existing .bashrc.d..."
+if [ -d ~/.bashrc.d ]; then
+  echo "ERROR: You need to delete .bashrc.d before install will proceed"
+  # exit 1
+fi
+
+echo "Cloning repository..."
+# git clone git@github.com:csutter/dotfiles2.git .bashrc.d
+
+echo "Checking for existing dotfiles/deleting symlinks..."
+for file in ~/.bashrc.d/config/*; do
+  # Delete if it exists as a symlink
+  if [ -L ~/.${file##*/} ]; then
+    echo "  - Deleting existing symlink .${file##*/}"
+    rm ~/.${file##*/}
+    continue
+  fi
+
+  # Error out if it exists as an actual file
+  [ -f ~/.${file##*/}] || continue
+  echo "ERROR: You need to backup and delete ~/.${file##*/} before install will proceed."
+  exit 1
+done
+
+echo "Linking files..."
+for file in ~/.bashrc.d/config/*; do
+  echo "  - .${file##*/}"
+  ln -s ~/.bashrc.d/config/${file##*/} .${file##*/}
+done
+
+echo "Re-sourcing .bashrc..."
+source ~/.bashrc
+
+echo "Done!"

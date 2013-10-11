@@ -1,0 +1,7 @@
+# Source all the scripts we need
+for script in ~/.bashrc.d/shell/*; do
+  # Skip non-executables
+  #  (Allows for easy disabling of individual scripts)
+  [ -x "$script" ] || continue
+  source $script
+done

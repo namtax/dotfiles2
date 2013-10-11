@@ -1,0 +1,8 @@
+# shell/tweaks
+#  Various little tweaks
+
+# Case insensitive autocompletion
+bind "set completion-ignore-case on"
+
+# Expand ~ into home dir
+bind "set expand-tilde on"

@@ -1,0 +1,76 @@
+# shell/prompt
+#  Because what would a shell be without a pretty prompt?
+
+# Function to parse git branch
+function parse_git_branch()
+{
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/@\1/'
+}
+
+# Function to figure out what symbol to show by parsing git status
+function prompt_symbols()
+{
+  # Figure out what branch we're on
+  exp=$(git status 2>&1)
+
+  # Are we in a repo at all?
+  inrepo_regex=".*On branch.*"
+  clean_regex=".*nothing to commit.*"
+  unstaged_regex=".*Changes not staged.*"
+  ahead_regex=".*branch is ahead.*"
+  behind_regex=".*branch is behind.*"
+  diverged_regex=".*have diverged.*"
+
+  if [[ $exp =~ $inrepo_regex ]]; then
+    # We are in a git repo
+    if [[ $exp =~ $clean_regex ]]; then
+      # We have a clean repo (nothing changed)
+      if [[ $exp =~ $ahead_regex ]]; then
+        # Our local copy is ahead of the remote
+        echo "${CCYAN}↑❱"
+      elif [[ $exp =~ $behind_regex ]]; then
+        echo "${CCYAN}↑❱"
+      elif [[ $exp =~ $diverged_regex ]]; then
+        echo "${CCYAN}↑❱"
+      else
+        # Our local copy is not ahead of the remote
+        echo "${CCYAN}❱"
+      fi
+    else
+      # We have a dirty local repo
+      if [[ $exp =~ $unstaged_regex ]]; then
+        # There are unstaged changed
+        echo "${CRED}❱"
+      else
+        # All changes are staged but not yet commited
+        echo "${CYELLOW}❱"
+      fi
+    fi
+  else
+    # We are not in a git repo
+    echo "${CBRIGHTBLACK}❱"
+  fi
+}
+
+
+# The actual prompt command and PS1
+function prompt_command {
+  # Get name of current directory (minus path)
+  dirname="${PWD##*/}"
+
+  # Have a space unless we're in home directory
+  space=" "
+
+  # Set to blank if 
+  if [[ $PWD =~ $HOME$ ]]; then
+    dirname=""
+    space=""
+  fi
+
+  export PS1="${CBRIGHTWHITE}${dirname}${CBRIGHTBLUE}$(parse_git_branch)${space}$(prompt_symbols)${CPLAIN} "
+}
+export PROMPT_COMMAND=prompt_command
+
+# Various pretty details
+export CLICOLOR=1
+export LSCOLORS=exdxcxdxbxegedabagacad
