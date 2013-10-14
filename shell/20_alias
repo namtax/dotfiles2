@@ -13,6 +13,9 @@ alias ll="ls -al"
 alias ..="cd .."
 alias ...="cd ../.."
 
+# rbenv
+alias rr="rbenv rehash"
+
 # Git
 alias g="git"
 alias gf="git fetch"
