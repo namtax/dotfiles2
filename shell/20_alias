@@ -13,8 +13,9 @@ alias ll="ls -al"
 alias ..="cd .."
 alias ...="cd ../.."
 
-# rbenv
+# Ruby
 alias rr="rbenv rehash"
+alias be="bundle exec"
 
 # Git
 alias g="git"
